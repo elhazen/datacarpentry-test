@@ -7,10 +7,7 @@ output:
     code_folding: hide
     toc: true
     toc_depth: 2
-<<<<<<< HEAD
     toc_float: true
-=======
->>>>>>> 59c31425fe2b0e86076e23dc4634f3bd81c54aa0
 ---
 
 ```{r setup, include=FALSE}
@@ -53,10 +50,62 @@ When you click the **Knit** button a document will be generated that includes bo
 # summary(cars)
 # mpg
 g <- ggplot(data = mpg, aes(x = displ, y = hwy))
-g + geom_point()
+  g + geom_point()
+  
 ```
 
 
 ### I need color
+
+```{r color}
+
+g + geom_point(aes(color = class)) + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+panel.background = element_blank(), axis.line = element_line(colour = "black")) + 
+  geom_smooth(method='lm')
+
+
+```
+### I need shape
+
+```{r shape}
+
+g + geom_point(aes(shape = class)) + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+panel.background = element_blank(), axis.line = element_line(colour = "black")) + 
+  geom_smooth(method='lm')
+
+
+```
+
+### I need size
+
+```{r size}
+
+g + geom_point(aes(size = class, color = fl)) + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+panel.background = element_blank(), axis.line = element_line(colour = "black")) + 
+  geom_smooth(method='lm')
+
+
+```
+
+### City vs. Highway 
+`r max(mpg$cty)` city vs `r max(mpg$hwy)` highway
+
+```{r cityhigh}
+
+theme_set(theme_gray() + theme(legend.key=element_blank()))
+theme_set(theme_bw() + theme(legend.key=element_blank())) 
+
+g <- ggplot(data = mpg, aes(x = cty, y = hwy))
+g + geom_point(aes(size = class, color = fl), alpha = 0.3) + 
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+panel.background = element_blank(), axis.line = element_line(colour = "black")) + 
+  geom_smooth(method='lm', color="black") + 
+  guides(color=guide_legend(override.aes=list(fill=NA)))
+
+
+```
 
 
