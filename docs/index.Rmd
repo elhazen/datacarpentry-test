@@ -8,6 +8,8 @@ output:
     toc: true
     toc_depth: 2
     toc_float: true
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r setup, include=FALSE}
@@ -107,5 +109,86 @@ panel.background = element_blank(), axis.line = element_line(colour = "black")) 
 
 
 ```
+
+
+### Exercise 5.5! 
+
+```{r exercise 5.5}
+
+theme_set(theme_gray() + theme(legend.key=element_blank()))
+theme_set(theme_bw() + theme(legend.key=element_blank())) 
+
+g <- ggplot(data = mpg, aes(x = cty, y = displ))
+g + geom_point(aes(size = class, color = hwy > 20), alpha = 0.3) + 
+ theme_classic() + 
+  geom_smooth(method='lm', color="black") + 
+  geom_smooth(color="blue") + 
+  guides(color=guide_legend(override.aes=list(fill=NA)))
+
+
+```
+
+```{r geoms}
+ggplot(mpg, aes(x = drv, y = hwy)) +
+    geom_jitter()
+```
+
+## Customization
+
+```{r customize}
+
+theme_set(theme_gray() + theme(legend.key=element_blank()))
+theme_set(theme_bw() + theme(legend.key=element_blank())) 
+
+g <- ggplot(data = mpg, mapping = aes(x = cty, y = displ))
+g + geom_point(aes(size = class, color = hwy > 20), alpha = 0.3) + 
+  theme_classic() +
+#  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+#panel.background = element_blank(), axis.line = element_line(colour = "black")) + 
+  geom_smooth(method='lm', color="black", size=0.3) + 
+  geom_smooth(color="blue", size=0.3) + 
+  guides(color=guide_legend(override.aes=list(fill=NA))) +
+  labs(title = "Relationship b/w displacement and city MPG", 
+       x = "Highway MPG", 
+       y = "Engine displacement (liters)") +
+  theme(text = element_text(size=12))
+```
+
+
+# Data Wrangling with `dplyr`
+
+Get data from [OHI](https://github.com/OHI-Science/data-science-training)
+
+```{r dplyr}
+
+gapminder <- read_csv("https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/gapminder.csv")
+
+gapminder
+head(gapminder, 8)
+tail(gapminder)
+str(gapminder)
+
+names(gapminder)
+dim(gapminder)
+
+c(nrow(gapminder),ncol(gapminder))
+summary(gapminder)
+
+filter(gapminder, lifeExp < 29)
+
+filter(gapminder, country == "Mexico")
+
+## pipe operator %>% 
+
+mean(filter(gapminder, country == "Mexico")$lifeExp)
+
+## TIDY - magritteR
+gapminder %>% filter(country == "Mexico") %>% 
+  .$lifeExp %>% mean
+
+gapminder %>% filter(country == "Sweden") %>% summarize(mean_lifeExp = mean(lifeExp))
+
+```
+
 
 
