@@ -7,7 +7,10 @@ output:
     code_folding: hide
     toc: true
     toc_depth: 2
+<<<<<<< HEAD
     toc_float: true
+=======
+>>>>>>> 59c31425fe2b0e86076e23dc4634f3bd81c54aa0
 ---
 
 ```{r setup, include=FALSE}
